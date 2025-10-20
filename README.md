@@ -60,8 +60,10 @@ Agent (abstract)
 Data lineage and origin tracking
 ```
 Provenance (abstract)
-├── DataArtifact   # Data entities (point clouds, images, documents)
+├── UDAT   # Data entities (point clouds, images, documents)
 └── Activity       # Processes generating or using data
+UDAT refers to [Useful Data Artifacts](https://medium.com/tag-bio/a-brief-introduction-to-useful-data-artifacts-and-the-next-generation-of-data-analysis-systems-1f42ef91ce92)
+
 ```
 
 # 🔗 Core Relationships
