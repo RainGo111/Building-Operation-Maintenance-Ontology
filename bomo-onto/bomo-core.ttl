@@ -1,0 +1,297 @@
+@prefix bomo: <http://bomo.org/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# ONTOLOGY METADATA
+
+<http://bomo.org/core> a owl:Ontology ;
+    dcterms:title "Building Operation and Maintenance Ontology - Core Layer"@en ;
+    dcterms:description "Core abstractions and operational primitives for digital twin operations"@en ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "BOMO-Core provides five fundamental modules: PhysicalTwin, Operational, Dynamics, Agent, and Provenance. This is a standalone ontology without external dependencies."@en .
+
+# MODULE 1: PHYSICAL TWIN
+
+bomo:PhysicalTwin a owl:Class ;
+    rdfs:label "Physical Twin"@en ;
+    rdfs:comment "Abstract representation of a physical world entity in the digital twin"@en .
+
+bomo:Space a owl:Class ;
+    rdfs:subClassOf bomo:PhysicalTwin ;
+    rdfs:label "Space"@en ;
+    rdfs:comment "3D spatial entity (room, floor, zone, building)"@en .
+
+bomo:Structure a owl:Class ;
+    rdfs:subClassOf bomo:PhysicalTwin ;
+    rdfs:label "Structure"@en ;
+    rdfs:comment "Built structure (building, bridge, infrastructure)"@en .
+
+bomo:Component a owl:Class ;
+    rdfs:subClassOf bomo:PhysicalTwin ;
+    rdfs:label "Component"@en ;
+    rdfs:comment "Building component (wall, slab, roof, facade)"@en .
+
+bomo:Asset a owl:Class ;
+    rdfs:subClassOf bomo:PhysicalTwin ;
+    rdfs:label "Asset"@en ;
+    rdfs:comment "Maintainable asset (equipment, device, system)"@en .
+
+# MODULE 2: OPERATIONAL
+
+bomo:Operational a owl:Class ;
+    rdfs:label "Operational"@en ;
+    rdfs:comment "Operational activities in building management"@en .
+
+bomo:Task a owl:Class ;
+    rdfs:subClassOf bomo:Operational ;
+    rdfs:label "Task"@en ;
+    rdfs:comment "Discrete executable work unit with defined outcome"@en .
+
+bomo:Process a owl:Class ;
+    rdfs:subClassOf bomo:Operational ;
+    rdfs:label "Process"@en ;
+    rdfs:comment "Time-extended workflow consisting of multiple tasks"@en .
+
+# Task states
+bomo:TaskState a owl:Class ;
+    rdfs:label "Task State"@en .
+
+bomo:Planned a owl:NamedIndividual , bomo:TaskState .
+bomo:Scheduled a owl:NamedIndividual , bomo:TaskState .
+bomo:InProgress a owl:NamedIndividual , bomo:TaskState .
+bomo:Completed a owl:NamedIndividual , bomo:TaskState .
+bomo:Cancelled a owl:NamedIndividual , bomo:TaskState .
+
+# MODULE 3: DYNAMICS
+# State and event modeling for dynamic behavior
+
+bomo:Dynamics a owl:Class ;
+    rdfs:label "Dynamics"@en ;
+    rdfs:comment "Dynamic aspects: states, events, and temporal evolution"@en .
+
+bomo:State a owl:Class ;
+    rdfs:subClassOf bomo:Dynamics ;
+    rdfs:label "State"@en ;
+    rdfs:comment "Snapshot of entity's condition at a specific moment"@en .
+
+bomo:Event a owl:Class ;
+    rdfs:subClassOf bomo:Dynamics ;
+    rdfs:label "Event"@en ;
+    rdfs:comment "Discrete occurrence affecting the system"@en .
+
+bomo:StateTransition a owl:Class ;
+    rdfs:subClassOf bomo:Dynamics ;
+    rdfs:label "State Transition"@en ;
+    rdfs:comment "Change from one state to another"@en .
+
+# State types
+bomo:StateType a owl:Class ;
+    rdfs:label "State Type"@en .
+
+bomo:Operational a owl:NamedIndividual , bomo:StateType .
+bomo:Degraded a owl:NamedIndividual , bomo:StateType .
+bomo:Faulty a owl:NamedIndividual , bomo:StateType .
+bomo:Maintenance a owl:NamedIndividual , bomo:StateType .
+bomo:Offline a owl:NamedIndividual , bomo:StateType .
+
+# Severity levels
+bomo:SeverityLevel a owl:Class ;
+    rdfs:label "Severity Level"@en .
+
+bomo:CriticalSeverity a owl:NamedIndividual , bomo:SeverityLevel .
+bomo:HighSeverity a owl:NamedIndividual , bomo:SeverityLevel .
+bomo:MediumSeverity a owl:NamedIndividual , bomo:SeverityLevel .
+bomo:LowSeverity a owl:NamedIndividual , bomo:SeverityLevel .
+
+# MODULE 4: AGENT
+
+bomo:Agent a owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "Active entity performing tasks (human, robot, or software)"@en .
+
+bomo:HumanAgent a owl:Class ;
+    rdfs:subClassOf bomo:Agent ;
+    rdfs:label "Human Agent"@en ;
+    rdfs:comment "Human personnel"@en .
+
+bomo:RobotAgent a owl:Class ;
+    rdfs:subClassOf bomo:Agent ;
+    rdfs:label "Robot Agent"@en ;
+    rdfs:comment "Robotic system"@en .
+
+bomo:SoftwareAgent a owl:Class ;
+    rdfs:subClassOf bomo:Agent ;
+    rdfs:label "Software Agent"@en ;
+    rdfs:comment "Automated software system"@en .
+
+# MODULE 5: PROVENANCE
+
+bomo:Provenance a owl:Class ;
+    rdfs:label "Provenance"@en ;
+    rdfs:comment "Data lineage and origin tracking"@en .
+
+bomo:DataArtifact a owl:Class ;
+    rdfs:subClassOf bomo:Provenance ;
+    rdfs:label "Data Artifact"@en ;
+    rdfs:comment "Data entity describing physical twins"@en .
+
+bomo:Activity a owl:Class ;
+    rdfs:subClassOf bomo:Provenance ;
+    rdfs:label "Activity"@en ;
+    rdfs:comment "Process that generated or used data"@en .
+
+# Data types
+bomo:DataType a owl:Class ;
+    rdfs:label "Data Type"@en .
+
+bomo:GeometricData a owl:NamedIndividual , bomo:DataType ;
+    rdfs:label "Geometric Data"@en .
+
+bomo:ImageData a owl:NamedIndividual , bomo:DataType ;
+    rdfs:label "Image Data"@en .
+
+bomo:SensorData a owl:NamedIndividual , bomo:DataType ;
+    rdfs:label "Sensor Data"@en .
+
+bomo:DocumentData a owl:NamedIndividual , bomo:DataType ;
+    rdfs:label "Document Data"@en .
+
+# OBJECT PROPERTIES
+
+# PhysicalTwin relationships
+
+bomo:hasState a owl:ObjectProperty ;
+    rdfs:label "has state"@en ;
+    rdfs:domain bomo:PhysicalTwin ;
+    rdfs:range bomo:State .
+
+bomo:contains a owl:ObjectProperty ;
+    rdfs:label "contains"@en ;
+    rdfs:domain bomo:Space ;
+    rdfs:range bomo:Space .
+
+bomo:locatedIn a owl:ObjectProperty ;
+    rdfs:label "located in"@en ;
+    rdfs:domain bomo:Asset ;
+    rdfs:range bomo:Space .
+
+bomo:hasPart a owl:ObjectProperty ;
+    rdfs:label "has part"@en ;
+    rdfs:comment "Composition relationship"@en .
+
+# Operational relationships
+
+bomo:targets a owl:ObjectProperty ;
+    rdfs:label "targets"@en ;
+    rdfs:domain bomo:Task ;
+    rdfs:range bomo:PhysicalTwin .
+
+bomo:assignedTo a owl:ObjectProperty ;
+    rdfs:label "assigned to"@en ;
+    rdfs:domain bomo:Task ;
+    rdfs:range bomo:Agent .
+
+bomo:consistsOf a owl:ObjectProperty ;
+    rdfs:label "consists of"@en ;
+    rdfs:domain bomo:Process ;
+    rdfs:range bomo:Task .
+
+# Dynamics relationships
+
+bomo:stateOf a owl:ObjectProperty ;
+    rdfs:label "state of"@en ;
+    rdfs:domain bomo:State ;
+    rdfs:range bomo:PhysicalTwin .
+
+bomo:affectsEntity a owl:ObjectProperty ;
+    rdfs:label "affects entity"@en ;
+    rdfs:domain bomo:Event ;
+    rdfs:range bomo:PhysicalTwin .
+
+bomo:triggeredBy a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en ;
+    rdfs:comment "Causation relationship"@en .
+
+bomo:fromState a owl:ObjectProperty ;
+    rdfs:label "from state"@en ;
+    rdfs:domain bomo:StateTransition ;
+    rdfs:range bomo:State .
+
+bomo:toState a owl:ObjectProperty ;
+    rdfs:label "to state"@en ;
+    rdfs:domain bomo:StateTransition ;
+    rdfs:range bomo:State .
+
+# Agent relationships
+
+
+bomo:performs a owl:ObjectProperty ;
+    rdfs:label "performs"@en ;
+    rdfs:domain bomo:Agent ;
+    rdfs:range bomo:Task .
+
+# Provenance relationships
+
+bomo:describes a owl:ObjectProperty ;
+    rdfs:label "describes"@en ;
+    rdfs:domain bomo:DataArtifact ;
+    rdfs:range bomo:PhysicalTwin .
+
+bomo:generatedBy a owl:ObjectProperty ;
+    rdfs:label "generated by"@en ;
+    rdfs:domain bomo:DataArtifact ;
+    rdfs:range bomo:Activity .
+
+bomo:attributedTo a owl:ObjectProperty ;
+    rdfs:label "attributed to"@en ;
+    rdfs:domain bomo:DataArtifact ;
+    rdfs:range bomo:Agent .
+
+# DATA PROPERTIES
+
+# General properties
+bomo:id a owl:DatatypeProperty ;
+    rdfs:label "identifier"@en ;
+    rdfs:range xsd:string .
+
+bomo:name a owl:DatatypeProperty ;
+    rdfs:label "name"@en ;
+    rdfs:range xsd:string .
+
+bomo:description a owl:DatatypeProperty ;
+    rdfs:label "description"@en ;
+    rdfs:range xsd:string .
+
+# PhysicalTwin properties
+bomo:floorArea a owl:DatatypeProperty ;
+    rdfs:domain bomo:Space ;
+    rdfs:range xsd:float .
+
+bomo:installationDate a owl:DatatypeProperty ;
+    rdfs:domain bomo:Asset ;
+    rdfs:range xsd:date .
+
+# Operational properties
+bomo:createdAt a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime .
+
+bomo:dueBy a owl:DatatypeProperty ;
+    rdfs:domain bomo:Task ;
+    rdfs:range xsd:dateTime .
+
+# Dynamics properties
+bomo:validAt a owl:DatatypeProperty ;
+    rdfs:domain bomo:State ;
+    rdfs:range xsd:dateTime .
+
+bomo:occursAt a owl:DatatypeProperty ;
+    rdfs:domain bomo:Event ;
+    rdfs:range xsd:dateTime .
+
+# Provenance properties
+bomo:qualityScore a owl:DatatypeProperty ;
+    rdfs:domain bomo:DataArtifact ;
+    rdfs:range xsd:float .
