@@ -86,9 +86,6 @@ BOMO-Core is designed to be aligned with (but not dependent on):
 | **BOT** | `Space ≡ bot:Zone` | Spatial topology |
 | **RealEstateCore** | `Asset ≡ rec:Asset` | Asset management |
 | **Brick** | `Asset ≡ brick:Equipment` | Building systems |
-| **ifcOWL** | Import via preprocessor | BIM geometry |
-| **PROV-O** | `DataArtifact ⊆ prov:Entity` | Provenance tracking |
-| **OWL-Time** | Time interval modeling | Temporal reasoning |
 
 # 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
